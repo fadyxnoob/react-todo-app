@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import todo from '../Images/todo.jpg';
-
+ 
 
 // get items from localStorage
 const getLocalStorageData = () => {
@@ -15,16 +15,16 @@ export const Todo = () => {
     const [inputData, setInutData] = useState("");
     const [items, setItems] = useState(getLocalStorageData());
     const [toggleSubmit, settoggleSubmit] = useState(true);
-    const [isEditItem, setIsEditItem ] = useState(null);
+    const [isEditItem, setIsEditItem] = useState(null);
 
     const addItems = () => {
         if (!inputData) {
             alert("Please add Item.");
-        }else if(inputData && !toggleSubmit){
+        } else if (inputData && !toggleSubmit) {
             setItems(
-                items.map((elem)=>{
-                    if(elem.id === isEditItem){
-                        return { ...elem, name: inputData}
+                items.map((elem) => {
+                    if (elem.id === isEditItem) {
+                        return { ...elem, name: inputData }
                     }
                     return elem;
                 })
@@ -33,20 +33,20 @@ export const Todo = () => {
             setInutData('');
             setIsEditItem(null);
         } else {
-            const allInputData = {id : new Date().getTime().toString(), name : inputData}
+            const allInputData = { id: new Date().getTime().toString(), name: inputData }
             setItems([...items, allInputData]);
             setInutData('');
         }
     };
 
     const editItem = (id) => {
-        const editItem = items.find((elem) =>{
+        const editItem = items.find((elem) => {
             return elem.id === id;
-        }) 
+        })
         settoggleSubmit(false)
         setInutData(editItem.name);
         setIsEditItem(id);
-        
+
     }
     const removeItem = (index) => {
         const updateItems = items.filter((elem) => {
@@ -83,7 +83,7 @@ export const Todo = () => {
                                     onChange={(e) => setInutData(e.target.value)} />
                                 <span className="input-group-text addTodo bg-dark  text-light" id="addon-wrapping">
                                     {
-                                        toggleSubmit ? <i className="text-info fa-solid fa-plus" title='add item' onClick={addItems}></i> :<i className="text-success fa-solid fa-pen-to-square me-2 fs-5" title='update item' onClick={addItems}></i>
+                                        toggleSubmit ? <i className="text-info fa-solid fa-plus" title='add item' onClick={addItems}></i> : <i className="text-success fa-solid fa-pen-to-square me-2 fs-5" title='update item' onClick={addItems}></i>
                                     } </span>
                             </div>
                         </div>
@@ -93,8 +93,11 @@ export const Todo = () => {
                                     <div className="mb-2 d-flex justify-content-between p-1 bg-dark rounded  text-light" key={item.id}>
                                         <h5 className='ps-2 pt-1'>{item.name}</h5>
                                         <span className="input-group-text addTodo bg-dark" id="addon-wrapping">
+
                                             <i className="text-success fa-solid fa-pen-to-square me-2 fs-5" title='edit item' onClick={() => editItem(item.id)}></i>
+
                                             <i className="text-danger fa-solid fa-delete-left fs-5" title='delete item' onClick={() => removeItem(item.id)}></i>
+
                                         </span>
                                     </div>
                                 );
